@@ -1,0 +1,225 @@
+body {
+    font-family: 'Raleway', 'Times New Roman';
+    font-weight: 700; /* Kalın */
+    background-color: #f1f1f1;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.top-bar {
+    background-color: rgba(68, 68, 68, 0.7); /* %70 opaklık */
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    padding: 15px;
+    font-size: 1.4rem;
+    user-select: none;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative; /* Gölge için gerekli */
+    backdrop-filter: blur(8px); /* Arka plana blur efekti */
+    -webkit-backdrop-filter: blur(8px); /* Safari desteği */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Gölge efekti */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Hafif çizgi */
+    z-index: 1000; /* Diğer elementlerin üstünde kalması için */
+}
+
+.login-container {
+    background: white;
+    width: 100%;
+    max-width: 400px;
+    padding: 40px 30px 50px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+
+.login-container h2 {
+    margin-bottom: 30px;
+    text-align: center;
+    color: #333;
+}
+
+.login-container form input[type="email"],
+.login-container form input[type="password"],
+.login-container form input[type="text"] {
+    width: 100%;
+    border: 2px solid #bbb;
+    border-radius: 8px;
+    font-size: 16px;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.login-container form input[type="email"]:focus,
+.login-container form input[type="password"]:focus,
+.login-container form input[type="text"]:focus {
+    border-color: #666;
+    outline: none;
+}
+
+.password-container {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 8px;
+    top: 35%;
+    transform: translateY(-50%);
+    padding: 6px 10px;
+    font-size: 13px;
+    cursor: pointer;
+    border: 1px solid #bbb;
+    background: #f8f8f8;
+    border-radius: 6px;
+    user-select: none;
+    transition: all 0.3s ease;
+}
+
+.toggle-password:hover {
+    background-color: #666;
+    color: white;
+    border-color: #666;
+}
+
+.login-container form button[type="submit"] {
+    width: 100%;
+    background-color: #666;
+    border: none;
+    color: white;
+    padding: 14px;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-container form button[type="submit"]:hover {
+    background-color: #444;
+}
+
+.error-message {
+    background: #ffe5e5;
+    border: 1px solid #cc0000;
+    color: #cc0000;
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.register-link {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.register-link a {
+    color: #444;
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+body.bg-image {
+    background: url('../images/arka_plan.jpg') no-repeat center center fixed;
+background-size: cover;
+
+   
+}
+
+.login-logo {
+    display: block;
+    margin: 0 auto 20px auto;
+    max-width: 120px;
+    height: auto;
+}
+
+.success-message {
+    background: #e5ffe5;
+    border: 1px solid #00aa00;
+    color: #008800;
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.login-container form select {
+    width: 100%;
+    border: 2px solid #bbb;
+    border-radius: 8px;
+    font-size: 16px;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+    background-color: white;
+    appearance: none; /* Bazı tarayıcılarda native stil engeli */
+}
+
+.login-container form select:focus {
+    border-color: #666;
+    outline: none;
+}
+
+.login-container form input[type="date"] {
+    width: 100%;
+    border: 2px solid #bbb;
+    border-radius: 8px;
+    font-size: 16px;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+    background-color: white;
+    color: #333;
+}
+
+.login-container form input[type="date"]:focus {
+    border-color: #666;
+    outline: none;
+}
+.form-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.form-col {
+  flex: 1;
+  min-width: 240px;
+}
+
+.login-container form input[type="text"],
+.login-container form input[type="email"],
+.login-container form input[type="password"],
+.login-container form input[type="date"],
+.login-container form input[type="tel"],
+.login-container form select {
+  width: 100%;
+  border: 2px solid #bbb;
+  border-radius: 8px;
+  font-size: 16px;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+
+

@@ -1,0 +1,1638 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            font-weight: 700;
+            background-color: #f1f1f1;
+            color: #333;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            min-height: 100vh;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        body.loaded {
+            opacity: 1;
+        }
+
+        /* Header - Transparan Top Bar */
+        .header {
+            height: 116px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(68, 68, 68, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 1000;
+            padding: 15px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            color: white;
+            font-weight: bold;
+            font-size: 1.4rem;
+            user-select: none;
+        }
+
+        .header:hover {
+            background-color: rgba(68, 68, 68, 0.85);
+        }
+
+        .header-content {
+            height: 75px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .logo::before {
+            content: "👟";
+            margin-right: 10px;
+            font-size: 32px;
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+        }
+
+        .login-btn, .profile-btn {
+            background-color: #666;
+            border: none;
+            color: white;
+            padding: 14px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .login-btn:hover, .profile-btn:hover {
+            background-color: #444;
+            transform: translateY(-1px);
+        }
+
+        .profile-section {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+        }
+
+        .profile-section.active {
+            display: flex;
+        }
+
+        .profile-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .profile-avatar:hover {
+            background-color: #444;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            display: none;
+            min-width: 200px;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.active {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .profile-dropdown a {
+            display: block;
+            padding: 12px 16px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #eee;
+        }
+
+        .profile-dropdown a:hover {
+            background: #f5f5f5;
+            color: #000;
+        }
+
+        .profile-dropdown a i {
+            margin-right: 8px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-toggle.active {
+            transform: rotate(180deg);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: -300px;
+            top: 0;
+            width: 300px;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 999;
+            transition: all 0.3s ease;
+            padding: 80px 20px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            overflow-y: auto;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            background-color: rgba(68, 68, 68, 0.8);
+            color: white;
+            border: none;
+            padding: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar-toggle:hover {
+            background-color: #444;
+            transform: scale(1.05);
+        }
+
+        .sidebar h3 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 22px;
+        }
+
+        .category-item {
+            display: block;
+            padding: 12px 15px;
+            margin: 5px 0;
+            background: white;
+            color: #333;
+            text-decoration: none;
+            border-radius: 8px;
+            border: 2px solid #bbb;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .category-item:hover, .category-item.active {
+            background-color: #666;
+            color: white;
+            border-color: #666;
+            transform: translateX(5px);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            transition: all 0.3s ease;
+        }
+
+        /* Ana Sayfa İçeriği */
+        .home-content {
+            display: block;
+        }
+
+        .home-content.hidden {
+            display: none;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+                   
+        .hero-title {
+            font-size: 48px;
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        /* Brand Panels */
+        .brand-panels {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .brand-panel {
+            height: 600px;
+            width: 500px;
+            border-radius: 50px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            background-size: cover;
+            background-position: center;
+            border: 2px solid #bbb;
+        }
+
+        .nike-panel {
+            background: linear-gradient(135deg, rgba(68, 68, 68, 0.8), rgba(102, 102, 102, 0.8)), 
+                        url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&h=600&fit=crop') center/cover;
+        }
+
+        .adidas-panel {
+            background: linear-gradient(135deg, rgba(68, 68, 68, 0.85), rgba(34, 34, 34, 0.85)), 
+                        url('https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=800&h=600&fit=crop') center/cover;
+        }
+
+        .puma-panel {
+            background: linear-gradient(135deg, rgba(68, 68, 68, 0.8), rgba(85, 85, 85, 0.8)), 
+                        url('https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=800&h=600&fit=crop') center/cover;
+        }
+
+        .brand-panel:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            border-color: #666;
+        }
+
+        .panel-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 40px;
+            background: linear-gradient(transparent, rgba(68, 68, 68, 0.9));
+            color: white;
+            text-align: center;
+        }
+
+        .panel-title {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .panel-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            font-weight: bold;
+        }
+
+        /* Ürün Listesi İçeriği */
+        .products-content {
+            display: none;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .products-content.active {
+            display: block;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 15px 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+        }
+
+        .breadcrumb-item {
+            color: #666;
+            text-decoration: none;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb-item:hover {
+            color: #333;
+        }
+
+        .breadcrumb-separator {
+            margin: 0 10px;
+            color: #ccc;
+        }
+
+        .breadcrumb-current {
+            color: #333;
+            font-weight: bold;
+        }
+
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .products-title {
+            font-size: 28px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .products-count {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: #f8f8f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-placeholder {
+            font-size: 60px;
+            color: #ddd;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-brand {
+            color: #666;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .product-price {
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #000000; /* Daha sakin, koyu mavi-gri ton */
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .product-sizes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .size-badge {
+            background: #f1f1f1;
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: #666;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            background: #444;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #f1f1f1;
+            color: #666;
+            width: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-secondary:hover {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .favorite-btn.active {
+            background: #e74c3c;
+            color: white;
+        }
+
+        /* Ürün Detay Modal */
+        .product-detail {
+            display: none;
+            animation: slideInRight 0.3s ease;
+        }
+
+        .product-detail.active {
+            display: block;
+        }
+
+        .detail-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-btn {
+            background: #666;
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-right: 20px;
+            font-size: 18px;
+            transition: background 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #444;
+        }
+
+        .detail-title {
+            font-size: 24px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .product-detail-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .detail-image {
+            width: 100%;
+            height: 400px;
+            background: #f8f8f8;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .detail-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .detail-info h1 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .detail-brand {
+            color: #666;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .detail-price {
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: #000000; /* Daha sakin, koyu mavi-gri ton */
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+
+        .detail-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .size-selector {
+            margin-bottom: 25px;
+        }
+
+        .size-selector h4 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .size-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .size-option {
+            padding: 12px 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .size-option:hover, .size-option.selected {
+            border-color: #666;
+            background: #666;
+            color: white;
+        }
+
+        .detail-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-large {
+            padding: 15px 30px;
+            font-size: 16px;
+        }
+
+        /* Profil Sayfası */
+        .profile-content {
+            display: none;
+        }
+
+        .profile-content.active {
+            display: block;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-avatar-large {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            margin-right: 30px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .profile-info h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .profile-info p {
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .profile-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .detail-group {
+            margin-bottom: 20px;
+        }
+
+        .detail-group h3 {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        .detail-item {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #666;
+            min-width: 120px;
+        }
+
+        .detail-value {
+            color: #333;
+        }
+
+        /* Sepet Sayfası */
+        .cart-content {
+            display: none;
+        }
+
+        .cart-content.active {
+            display: block;
+        }
+
+        .cart-items {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .cart-item {
+            display: flex;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-image {
+            width: 120px;
+            height: 120px;
+            background: #f8f8f8;
+            border-radius: 10px;
+            margin-right: 20px;
+            overflow: hidden;
+        }
+
+        .cart-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .cart-item-brand {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .cart-item-size {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .cart-item-price {
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+           font-size: 28px;
+           font-weight: 700;
+           margin-left: 700px;
+           color: #000000; /* Daha sakin, koyu mavi-gri ton */
+          letter-spacing: 1px;
+          margin-bottom: 25px;
+         text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .quantity-btn {
+            background: #f1f1f1;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+            border: none;
+            border-left: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        .remove-item {
+            color: #e74c3c;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .cart-summary {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .summary-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-total {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .checkout-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 20px;
+            transition: background 0.3s ease;
+        }
+
+        .checkout-btn:hover {
+            background: #c0392b;
+        }
+
+        /* Favoriler Sayfası */
+        .favorites-content {
+            display: none;
+        }
+
+        .favorites-content.active {
+            display: block;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #666;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(68, 68, 68, 0.5);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .brand-panels {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .brand-panel {
+                height: 300px;
+            }
+
+            .panel-title {
+                font-size: 28px;
+            }
+
+            .header-content {
+                padding: 0 15px;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+
+            .detail-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .products-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-avatar-large {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+            .cart-item {
+                flex-direction: column;
+            }
+
+            .cart-item-image {
+                width: 100%;
+                height: 200px;
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+        }
+        .favorite-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 2;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.favorite-btn:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.favorite-btn i {
+    font-size: 18px;
+    color: #666;
+    transition: all 0.3s ease;
+}
+
+.favorite-btn.favorite i {
+    color: #e74c3c !important;
+    animation: heartBeat 0.6s ease-in-out;
+}
+
+.favorite-btn:hover i {
+    color: #e74c3c;
+}
+
+/* Kalp animasyonu */
+@keyframes heartBeat {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.3);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Bildirim stilleri */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    min-width: 250px;
+    border-left: 4px solid #3498db;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification.success {
+    border-left-color: #27ae60;
+}
+
+.notification.success i {
+    color: #27ae60;
+}
+
+.notification.error {
+    border-left-color: #e74c3c;
+}
+
+.notification.error i {
+    color: #e74c3c;
+}
+
+.notification.info i {
+    color: #3498db;
+}
+
+.notification i {
+    font-size: 18px;
+}
+
+.notification span {
+    font-weight: 500;
+    color: #333;
+}
+
+/* Favori sayfası için boş durum stilleri */
+.no-products {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+}
+
+.no-products i {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.no-products p {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+/* Ürün kartı göreli pozisyon */
+.product-card {
+    position: relative;
+}
+.product-card {
+    position: relative !important;
+}
+
+.product-image {
+    position: relative !important;
+}
+
+/* Favori butonu - güçlü stil */
+.product-card .favorite-btn {
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: none !important;
+    border-radius: 50% !important;
+    width: 40px !important;
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    z-index: 10 !important;
+    backdrop-filter: blur(10px) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+.product-card .favorite-btn:hover {
+    background: rgba(255, 255, 255, 1) !important;
+    transform: scale(1.1) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+.product-card .favorite-btn i {
+    font-size: 18px !important;
+    color: #666 !important;
+    transition: all 0.3s ease !important;
+}
+
+.product-card .favorite-btn.favorite i {
+    color: #e74c3c !important;
+    animation: heartBeat 0.6s ease-in-out !important;
+}
+
+.product-card .favorite-btn:hover i {
+    color: #e74c3c !important;
+}
+
+/* Kalp animasyonu */
+@keyframes heartBeat {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.3);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Favori sayfası için boş durum stilleri */
+.no-products {
+    text-align: center !important;
+    padding: 60px 20px !important;
+    color: #666 !important;
+}
+
+.no-products i {
+    display: block !important;
+    margin-bottom: 20px !important;
+}
+
+.no-products p {
+    font-size: 18px !important;
+    margin-bottom: 30px !important;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #f0f0f0 0%, #d9d9d9 100%) !important; /* Açık gri tonları */
+    color: #333 !important; /* Koyu gri yazı */
+    border: 1.5px solid #bbb !important; /* Hafif gri sınır */
+    padding: 12px 30px !important;
+    border-radius: 25px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    box-shadow: none !important;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #e1e1e1 0%, #bfbfbf 100%) !important; /* Hoverda biraz koyu gri */
+    color: #111 !important;
+    border-color: #999 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(150, 150, 150, 0.25) !important; /* Hafif gri gölge */
+}
+
+.btn-primary:active {
+    background: linear-gradient(135deg, #cfcfcf 0%, #b0b0b0 100%) !important; /* Basılı halde biraz daha koyu */
+    box-shadow: none !important;
+    transform: translateY(0) !important;
+}
+
+
+.hakkimizda-section {
+    width: 100%;
+    background-color: #f1f1f1; /* Örnek arka plan rengi */
+}
+
+.hakkimizda-section .container {
+    width: 100%;
+    margin: 0;
+    padding: 0 20px; /* isteğe bağlı sağ-sol boşluk */
+}
+
+.hakkimizda-section h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    font-weight: 900;
+}
+
+.hakkimizda-section p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hakkimizda-section strong {
+    color: #ddd; /* biraz açık renk vurgu için */
+}
+
+.view-detail-btn {
+  background-color: #f5f5f5;       /* Açık gri arka plan */
+  color: #333;                     /* Koyu gri yazı */
+  border: 1.5px solid #ccc;        /* Hafif gri kenarlık */
+  padding: 10px 22px;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+  box-shadow: none;
+  user-select: none;
+  display: inline-block;
+  text-align: center;
+  letter-spacing: 0.03em;
+}
+
+.view-detail-btn:hover:not(:disabled) {
+  background-color: #e0e0e0;       /* Bir tık koyu gri hoverda */
+  border-color: #999;
+  color: #111;
+}
+
+.view-detail-btn:active:not(:disabled) {
+  background-color: #d1d1d1;       /* Basılıyken biraz daha koyu */
+  border-color: #666;
+  color: #000;
+  transform: translateY(1px);
+}
+
+.view-detail-btn:disabled {
+  background-color: #fafafa;       /* Çok açık gri */
+  color: #aaa;                    /* Açık gri yazı */
+  border-color: #eee;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+/* Eski adet değiştirme butonlarını kaldıran stil */
+.cart-item-quantity {
+    display: none;
+}
+
+/* Yeni "Sepetten Çıkar" butonu stili */
+.remove-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.remove-btn:hover {
+    background: #c0392b;
+}
+
+.remove-btn i {
+    font-size: 14px;
+}
+.orders-content {
+    display: none;
+    padding: 20px;
+}
+
+.orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.order-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #f0f0f0;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f8f9fa;
+    margin-bottom: 15px;
+}
+
+.order-info h3 {
+    margin: 0;
+    color: #333;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.order-date {
+    color: #666;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.order-status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-beklemede {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-hazirlaniyor {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.status-kargoda {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-teslim-edildi {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.status-iptal-edildi {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.order-products {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.order-product {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.order-product-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.order-product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.order-product-info {
+    flex: 1;
+}
+
+.order-product-name {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.order-product-details {
+    font-size: 14px;
+    color: #666;
+}
+
+.order-product-price {
+    font-weight: 600;
+    color: #e74c3c;
+    font-size: 16px;
+}
+
+.order-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 2px solid #f8f9fa;
+}
+
+.order-total-label {
+    font-size: 16px;
+    color: #333;
+}
+
+.order-total-amount {
+    font-size: 20px;
+    font-weight: 700;
+    color: #e74c3c;
+}
+
+.no-orders {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+}
+
+.no-orders i {
+    font-size: 64px;
+    color: #ddd;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.no-orders p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    background: #e74c3c;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: #c0392b;
+}
+
+@media (max-width: 768px) {
+    .order-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .order-product {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .order-product-image {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .order-total {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}
+
+
